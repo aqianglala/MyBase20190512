@@ -1,16 +1,18 @@
 package com.example.mybase20190512.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle3.components.support.RxFragment;
+
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
 
     public abstract Object setLayout();
     public abstract void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView);

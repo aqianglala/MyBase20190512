@@ -40,11 +40,6 @@ public final class Configurator {
         return this;
     }
 
-    public final Configurator withLoaderDelayed(long delayed) {
-        LATTE_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
-        return this;
-    }
-
     private void checkConfiguration() {
         final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
@@ -55,10 +50,10 @@ public final class Configurator {
     @SuppressWarnings("unchecked")
     final <T> T getConfiguration(Object key) {
         checkConfiguration();
-        final Object value = LATTE_CONFIGS.get(key);
-        if (value == null) {
-            throw new NullPointerException(key.toString() + " IS NULL");
-        }
+//        final Object value = LATTE_CONFIGS.get(key);
+//        if (value == null) {
+//            throw new NullPointerException(key.toString() + " IS NULL");
+//        }
         return (T) LATTE_CONFIGS.get(key);
     }
 }
