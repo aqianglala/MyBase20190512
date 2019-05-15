@@ -8,7 +8,7 @@ import android.os.Handler;
  * Created by tank on 2019/5/12
  */
 
-public final class Latte {
+public final class GlobalConfig {
 
     public static Configurator init(Context context) {
         Configurator.getInstance()

@@ -2,7 +2,7 @@ package com.example.mybase20190512.net;
 
 
 import com.example.mybase20190512.app.ConfigKeys;
-import com.example.mybase20190512.app.Latte;
+import com.example.mybase20190512.app.GlobalConfig;
 import com.example.mybase20190512.net.rx.RxRestService;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public final class RestCreator {
     private static final class OKHttpHolder {
         private static final int TIME_OUT = 60;
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
-        private static final ArrayList<Interceptor> INTERCEPTORS = Latte.getConfiguration(ConfigKeys.INTERCEPTOR);
+        private static final ArrayList<Interceptor> INTERCEPTORS = GlobalConfig.getConfiguration(ConfigKeys.INTERCEPTOR);
 
         private static OkHttpClient.Builder addInterceptor() {
             if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()) {
@@ -49,7 +49,7 @@ public final class RestCreator {
      * 构建全局Retrofit客户端
      */
     private static final class RetrofitHolder {
-        private static final String BASE_URL = Latte.getConfiguration(ConfigKeys.API_HOST);
+        private static final String BASE_URL = GlobalConfig.getConfiguration(ConfigKeys.API_HOST);
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(OKHttpHolder.OK_HTTP_CLIENT)

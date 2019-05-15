@@ -2,7 +2,10 @@ package com.example.mybase20190512.app;
 
 import android.os.Handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import okhttp3.Interceptor;
 
 
 /**
@@ -13,10 +16,13 @@ public final class Configurator {
 
     private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
     private static final Handler HANDLER = new Handler();
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator() {
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
         LATTE_CONFIGS.put(ConfigKeys.HANDLER, HANDLER);
+        // 先传一个空的集合进去，不然在网络框架中调用getConfiguration会报错
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
     }
 
     static Configurator getInstance() {
@@ -40,6 +46,18 @@ public final class Configurator {
         return this;
     }
 
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
     private void checkConfiguration() {
         final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
@@ -50,10 +68,10 @@ public final class Configurator {
     @SuppressWarnings("unchecked")
     final <T> T getConfiguration(Object key) {
         checkConfiguration();
-//        final Object value = LATTE_CONFIGS.get(key);
-//        if (value == null) {
-//            throw new NullPointerException(key.toString() + " IS NULL");
-//        }
-        return (T) LATTE_CONFIGS.get(key);
+        final Object value = LATTE_CONFIGS.get(key);
+        if (value == null) {
+            throw new NullPointerException(key.toString() + " IS NULL");
+        }
+        return (T) value;
     }
 }
